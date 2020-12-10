@@ -45,7 +45,7 @@
 
 #hypotestZmean --> Given the following,
 #use P-value and classical method to conduct Hypothesis test of large > 30 sample size using Z score
-#u0 = Mean of the Null Hypothesis
+#u0 --> Mean of the Null Hypothesis
 #n --> Sample Size
 #sd --> Standard Deviation
 #meanYbar --> Sample mean
@@ -53,7 +53,7 @@
 
 #hypotestTmean --> Given the following,
 #use P-value and classical method to conduct Hypothesis test of small < 30 sample size using T score
-#u0 = Mean of the Null Hypothesis
+#u0 --> Mean of the Null Hypothesis
 #n --> Sample Size
 #sd --> Standard Deviation
 #meanYbar --> Sample mean
