@@ -13,6 +13,8 @@
 #7. hypotestZproportion
 #8. hypotestTwoGroupsmean
 #9. hypotestTwoGroupsproportion
+#10.moemean
+#11.moeproportion
 
 #BELOW ARE THEIR PURPOSES:
 
@@ -43,40 +45,51 @@
 
 #hypotestZmean --> Given the following,
 #use P-value and classical method to conduct Hypothesis test of large > 30 sample size using Z score
-#u0 = Mean of the Null Hypothesis
+#u0 --> Mean of the Null Hypothesis
 #n --> Sample Size
 #sd --> Standard Deviation
 #meanYbar --> Sample mean
-#confidencelevel --> Confidence Level
+#confidencelevel --> Confidence Level (usually if given alpha, use 1-alpha to find confidence level)
 
 #hypotestTmean --> Given the following,
 #use P-value and classical method to conduct Hypothesis test of small < 30 sample size using T score
-#u0 = Mean of the Null Hypothesis
+#u0 --> Mean of the Null Hypothesis
 #n --> Sample Size
 #sd --> Standard Deviation
 #meanYbar --> Sample mean
-#confidencelevel --> Confidence Level
+#confidencelevel --> Confidence Level (usually if given alpha, use 1-alpha to find confidence level)
 
 #hypotestZproportion --> Given the following,
 #use P-value and classical method to conduct Hypothesis test of large > 30 sample size using Z score
-#pi0 = Mean of the Null Hypothesis
+#pi0 --> Proportion of the Null Hypothesis
 #n --> Sample Size
 #p --> proportion
-#confidencelevel --> Confidence Level
+#confidencelevel --> Confidence Level (usually if given alpha, use 1-alpha to find confidence level)
 
 #hypotestTwoGroupsmean --> Given the following, conduct Hypothesis test to test the mean of two groups being equal using Z score
-#xbarV1mean = mean of Variable/Group 1
-#xbarV2mean = mean of Variable/Group 2
-#nV1 = size of Variable/Group 1
-#nV2 = size of Variable/Group 2
-#sdV1 = standard deviation of Variable/Group 1
-#sdV2 = standard deviation of Variable/Group 2
+#xbarV1mean --> mean of Variable/Group 1
+#xbarV2mean --> mean of Variable/Group 2
+#nV1 --> size of Variable/Group 1
+#nV2 --> size of Variable/Group 2
+#sdV1 --> standard deviation of Variable/Group 1
+#sdV2 --> standard deviation of Variable/Group 2
 
 #hypotestTwoGroupsproportion --> Given the following, conduct Hypothesis test to test the proportion of two groups being equal using Z score
-#proportionV1 = Proportion of Variable/Group 1
-#proportionV2 = Proportion of Variable/Group 2
-#nV1 = size of Variable/Group 1
-#nV2 = size of Variable/Group 2
+#proportionV1 --> Proportion of Variable/Group 1
+#proportionV2 --> Proportion of Variable/Group 2
+#nV1 --> size of Variable/Group 1
+#nV2 --> size of Variable/Group 2
+
+#moemean --> Given the following, find the margin of error of the sample mean
+#n --> Sample Size
+#confidencelevel --> Confidence Level (usually if given alpha, use 1-alpha to find confidence level)
+#sd --> Standard Deviation
+
+#moeproportion  --> Given the following, find the margin of error of the sample proportion
+#n --> Sample Size
+#p --> proportion
+#confidencelevel --> Confidence Level (usually if given alpha, use 1-alpha to find confidence level)
+
 
 findciZmean = function(n = NULL, sd = NULL, meanYbar = NULL, confidencelevel = NULL){
   alpha = 1 - confidencelevel
@@ -155,7 +168,9 @@ hypotestZmean = function(u0 = NULL, n = NULL, sd = NULL, meanYbar = NULL, confid
   }
   
   print("Classical method -->")
-  
+  if (z < 0){
+    z = abs(z)
+  }
   if (zcrit < 0){
     zcrit = abs(zcrit)
   }
@@ -166,7 +181,7 @@ hypotestZmean = function(u0 = NULL, n = NULL, sd = NULL, meanYbar = NULL, confid
   if(z > zcrit){
     print("We reject the null hypothesis at the level of alpha: ")
     print(alpha)
-  } else if (zcrit < z){
+  } else if (zcrit > z){
     print("We do not reject the null hypothesis at the level of alpha: ")
     print(alpha)
   }
@@ -198,7 +213,9 @@ hypotestTmean = function(u0 = NULL, n = NULL, sd = NULL, meanYbar = NULL, confid
   }
   
   print("Classical method -->")
-  
+  if (z < 0){
+    z = abs(z)
+  }
   if (tcrit < 0){
     tcrit = abs(tcrit)
   }
@@ -209,7 +226,7 @@ hypotestTmean = function(u0 = NULL, n = NULL, sd = NULL, meanYbar = NULL, confid
   if(t > tcrit){
     print("We reject the null hypothesis at the level of alpha: ")
     print(alpha)
-  } else if (tcrit < t){
+  } else if (tcrit > t){
     print("We do not reject the null hypothesis at the level of alpha: ")
     print(alpha)
   }
@@ -218,6 +235,7 @@ hypotestTmean = function(u0 = NULL, n = NULL, sd = NULL, meanYbar = NULL, confid
 
 hypotestZproportion = function(pi0 = NULL, n = NULL, p = NULL, confidencelevel = NULL){
   z = (p - pi0)/sqrt((pi0*(1-pi0))/n)
+  alpha = 1 - confidencelevel
   zcrit = qnorm(alpha/2)
   
   print("P-value method with the P-value --> ")
@@ -237,7 +255,9 @@ hypotestZproportion = function(pi0 = NULL, n = NULL, p = NULL, confidencelevel =
   }
   
   print("Classical method --> ")
-  
+  if (z < 0){
+    z = abs(z)
+  }
   if (zcrit < 0){
     zcrit = abs(zcrit)
   }
@@ -245,10 +265,11 @@ hypotestZproportion = function(pi0 = NULL, n = NULL, p = NULL, confidencelevel =
   print(z)
   print("Zcrit: ")
   print(zcrit)
+  
   if(z > zcrit){
     print("We reject the null hypothesis at the level of alpha: ")
     print(alpha)
-  } else if (zcrit < z){
+  } else if (zcrit > z){
     print("We do not reject the null hypothesis at the level of alpha: ")
     print(alpha)
   }
@@ -297,4 +318,24 @@ hypotestTwoGroupsproportion = function (proportionV1 = NULL, proportionV2 = NULL
   if(pval < 0.05 && pval < 0.01){
     print("We reject null hypothesis by stating it is statistically significant at the level of the p-value with alpha = 0.05 and 0.01")
   }
+}
+
+moemean = function ( n = NULL, confidencelevel = NULL, sd = NULL){
+  alpha = 1 - confidencelevel
+  z = qnorm(alpha/2)
+  if (z < 0){
+    z = abs(z)
+  }
+  sderror = sd/sqrt(n)
+  z * sderror
+}
+
+moeproportion = function (n = NULL, confidencelevel = NULL, p = NULL){
+  alpha = 1 - confidencelevel
+  z = qnorm(alpha/2)
+  if (z < 0){
+    z = abs(z)
+  }
+   sderror = sqrt((p*(1-p))/n)
+  z * sderror
 }
