@@ -213,8 +213,8 @@ hypotestTmean = function(u0 = NULL, n = NULL, sd = NULL, meanYbar = NULL, confid
   }
   
   print("Classical method -->")
-  if (z < 0){
-    z = abs(z)
+  if (t < 0){
+  t = abs(t)
   }
   if (tcrit < 0){
     tcrit = abs(tcrit)
